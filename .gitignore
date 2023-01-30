@@ -5,6 +5,7 @@ yarn-error.log
 # build files
 build
 dist
+.env
 
 # misc
 .DS_Store
