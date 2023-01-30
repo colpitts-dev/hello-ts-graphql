@@ -14,6 +14,12 @@ const peopleData = [
   { id: "4", name: "John", email: "johndoe@example.com", age: 18 },
 ];
 
+export interface PersonInput {
+  name: string;
+  email: string;
+  age: number;
+}
+
 const PersonType = new GraphQLObjectType({
   name: "Person",
   description: "People are what make up the hyper[local] communities",
@@ -58,6 +64,30 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+// Root mutation type
+const RootMutation = new GraphQLObjectType({
+  name: "RootMutationType",
+  description: "Documentation for RootMutationType...",
+  fields: {
+    createPerson: {
+      type: PersonType,
+      description: "Created a new person on the platform",
+      args: {
+        name: { type: GraphQLString },
+        email: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      resolve(parent, args: PersonInput) {
+        const newPerson = {
+          ...args,
+        };
+        return newPerson;
+      },
+    },
+  },
+});
+
 export const schema = new GraphQLSchema({
   query: RootQuery,
+  mutation: RootMutation,
 });
